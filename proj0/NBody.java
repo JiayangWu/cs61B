@@ -1,12 +1,12 @@
 public class NBody {
-	public static double readRadius(String filename) {
-		In in = new In(filename);
-		int N = in.readInt();
-		double R = in.readDouble();
-		return R;
-	}
+	public static double readRadius(final String name) {
+        final In in = new In(name);
+        final int N = in.readInt();
+        final double Radius = in.readDouble();
+        return Radius;
+    }
 
-	public static Body[] readBodies(String filename) {
+public static Body[] readBodies(String filename) {
 		In in = new In(filename);
 		int N = in.readInt();
 		double R = in.readDouble();
@@ -26,41 +26,44 @@ public class NBody {
 		return bodies;
 	}
 
-	public static void main(String[] args) {
-		double T = Double.parseDouble(args[0]);
-		double dt = Double.parseDouble(args[1]);
-		String filename = args[2];
-		
-		double radius = readRadius(filename);
-		Body[] bodies = readBodies(filename);
-		int N = bodies.length;
+    public static void main(final String[] args) {
+        final double T = Double.parseDouble(args[0]);
+        final double dt = Double.parseDouble(args[1]);
 
-		StdDraw.setScale(-radius, radius);
-		StdDraw.clear();
-		StdDraw.picture(0, 0, "images/starfield.jpg");
+        final String filename = args[2];
+        final double radius = readRadius(filename);
+        final Body[] bodies = readBodies(filename);
+        final int N = bodies.length;
 
-		for (Body b: bodies) {
-			b.draw();
-		}
+        final String image = "images/starfield.jpg";
 
-		StdDraw.enableDoubleBuffering();
+        StdDraw.setScale(-100, 100);
+        StdDraw.clear();
+        StdDraw.picture(0, 0, image);
 
-		double time = 0;
-		while (time < T) {
-			double[] xForces = new double[N];
-			double[] yForces = new double[N];
-			
-			for (int i = 0; i < N; i++) {
-				xForces[i] = bodies[i].calcNetForceExertedByX(bodies);
-				yForces[i] = bodies[i].calcNetForceExertedByY(bodies);
-			}
+        StdDraw.enableDoubleBuffering();
+        for (final Body b : bodies) {
+            b.draw();
+        }
 
-			for (int i = 0; i < N; i++) {
-				bodies[i].update(dt, xForces[i], yForces[i]);
-			}
+        StdDraw.enableDoubleBuffering();
 
-			StdDraw.picture(0, 0, "images/starfield.jpg");
-			for (Body b: bodies) {
+        double time = 0;
+        while (time < T) {
+            final double[] xForces = new double[N];
+            final double[] yForces = new double[N];
+
+            for (int i = 0; i < N; i++) {
+                xForces[i] = bodies[i].calcNetForceExertedByX(bodies);
+                yForces[i] = bodies[i].calcNetForceExertedByY(bodies);
+            }
+
+            for (int i = 0; i < N; i++) {
+                bodies[i].update(dt, xForces[i], yForces[i]);
+            }
+
+            StdDraw.picture(0, 0, "images/starfield.jpg");
+            for (final Body b : bodies) {
 				b.draw();
 			}
 			StdDraw.show();
@@ -68,12 +71,13 @@ public class NBody {
 			time += dt;
 		}
 
-		StdOut.printf("%d\n", bodies.length);
-		StdOut.printf("%.2e\n", radius);
+		System.out.printf("%d\n", bodies.length);
+		System.out.printf("%.2e\n", radius);
 		for (int i = 0; i < bodies.length; i++) {
-		    StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+		    System.out.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
 		                  bodies[i].xxPos, bodies[i].yyPos, bodies[i].xxVel,
 		                  bodies[i].yyVel, bodies[i].mass, bodies[i].imgFileName);   
 		}
 	}
 }
+	
