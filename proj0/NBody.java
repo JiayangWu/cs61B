@@ -1,13 +1,13 @@
 public class NBody {
-	public static double readRadius(final String name) {
-        final In in = new In(name);
-        final int N = in.readInt();
-        final double Radius = in.readDouble();
+	public static double readRadius(String name) {
+        In in = new In(name);
+        int N = in.readInt();
+        double Radius = in.readDouble();
         return Radius;
     }
 
-public static Body[] readBodies(String filename) {
-		In in = new In(filename);
+public static Body[] readBodies(String name) {
+		In in = new In(name);
 		int N = in.readInt();
 		double R = in.readDouble();
 		
@@ -26,23 +26,25 @@ public static Body[] readBodies(String filename) {
 		return bodies;
 	}
 
-    public static void main(final String[] args) {
-        final double T = Double.parseDouble(args[0]);
-        final double dt = Double.parseDouble(args[1]);
+    public static void main(String[] args) {
+        // Below is copied from https://github.com/yngz/cs61b/blob/master/proj0/NBody.java
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
 
-        final String filename = args[2];
-        final double radius = readRadius(filename);
-        final Body[] bodies = readBodies(filename);
-        final int N = bodies.length;
+        String filename = args[2];
+        double radius = readRadius(filename);
+        Body[] bodies = readBodies(filename);
 
-        final String image = "images/starfield.jpg";
+        int N = bodies.length;
 
-        StdDraw.setScale(-100, 100);
+        String image = "images/starfield.jpg";
+
+        StdDraw.setScale(-radius, radius);
         StdDraw.clear();
         StdDraw.picture(0, 0, image);
 
         StdDraw.enableDoubleBuffering();
-        for (final Body b : bodies) {
+        for (Body b : bodies) {
             b.draw();
         }
 
@@ -50,8 +52,8 @@ public static Body[] readBodies(String filename) {
 
         double time = 0;
         while (time < T) {
-            final double[] xForces = new double[N];
-            final double[] yForces = new double[N];
+            double[] xForces = new double[N];
+            double[] yForces = new double[N];
 
             for (int i = 0; i < N; i++) {
                 xForces[i] = bodies[i].calcNetForceExertedByX(bodies);
@@ -63,7 +65,7 @@ public static Body[] readBodies(String filename) {
             }
 
             StdDraw.picture(0, 0, "images/starfield.jpg");
-            for (final Body b : bodies) {
+            for (Body b : bodies) {
 				b.draw();
 			}
 			StdDraw.show();

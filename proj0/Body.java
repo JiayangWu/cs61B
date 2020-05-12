@@ -25,7 +25,7 @@ public class Body{
     }
 
     public double calcDistance(Body b1){
-        return Math.sqrt(Math.pow(Math.abs(b1.xxPos - xxPos), 2) + Math.pow(Math.abs(b1.yyPos - yyPos), 2));
+        return Math.sqrt(Math.pow(b1.xxPos - xxPos, 2) + Math.pow(b1.yyPos - yyPos, 2));
     }
 
     public double calcForceExertedBy(Body b1){
@@ -47,19 +47,21 @@ public class Body{
 
     public double calcNetForceExertedByX(Body[] body_array){
         double net_force_x = 0;
-        int N = body_array.length;
-        for (int i = 0; i < N; i ++){
-            net_force_x += calcForceExertedByX(body_array[i]);
-        }
+        for (Body b: body_array){
+			if (!this.equals(b)) {
+				net_force_x += calcForceExertedByX(b);
+			}
+		}
         return net_force_x;
     }
 
     public double calcNetForceExertedByY(Body[] body_array){
         double net_force_y = 0;
-        int N = body_array.length;
-        for (int i = 0; i < N; i ++){
-            net_force_y += calcForceExertedByY(body_array[i]);
-        }
+        for (Body b: body_array){
+			if (!this.equals(b)) {
+				net_force_y += calcForceExertedByY(b);
+			}
+		}
         return net_force_y;
     }
 
@@ -72,6 +74,10 @@ public class Body{
 
         xxPos += xxVel * time;
         yyPos += yyVel * time;
+    }
 
+    public void draw(){
+        // System.out.println(xxPos);
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
     }
 }
