@@ -6,6 +6,16 @@ public class NBody {
 		return Radius;
 	}
 
+    public static Body[] readBodies(String name) {
+        In in = new In(name);
+		int N = in.readInt();
+        double Radius = in.readDouble();
+        Body[] body_list = new Body[N];
+        for (int i = 0; i < N; i++){
+            body_list[i] = new Body(in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(), in.readString());
+        }       
+        return body_list;
+    }
 
 	// public static void main(String[] args) {
 	// 	double T = Double.parseDouble(args[0]);
