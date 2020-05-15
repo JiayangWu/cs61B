@@ -81,20 +81,19 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        if (A == null){
+        if (A == null) {
             return B;
         }
-        if (B == null){
+        if (B == null) {
             return A;
         }
-        IntList dummy_head = new IntList(0, A);
+        IntList dummyHead = new IntList(0, A);
         IntList p = A;
-        while (p != null && p.rest != null){
+        while (p != null && p.rest != null) {
             p = p.rest;
         }
         p.rest = B;
-        return dummy_head.rest;
+        return dummyHead.rest;
     }
 
     /**
@@ -102,22 +101,21 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        IntList dummy_head = new IntList(0, null);
-        IntList p1 = dummy_head;
+        IntList dummyHead = new IntList(0, null);
+        IntList p1 = dummyHead;
         IntList p = A;
-        while (p != null){
+        while (p != null) {
             p1.rest = new IntList(p.first, null);
             p1 = p1.rest;
             p = p.rest;
         }
         p = B;
-        while (p != null){
+        while (p != null) {
             p1.rest = new IntList(p.first, null);
             p1 = p1.rest;
             p = p.rest;
         }
-        return dummy_head.rest;
+        return dummyHead.rest;
     }
 
 
