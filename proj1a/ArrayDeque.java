@@ -42,22 +42,32 @@ public class ArrayDeque<T> {
         }
         System.out.println();
     }
-    public void removeFirst() {
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         start = (start + 1) % items.length;
+        T itemToReturn = items[start];
         items[start] = null;
         size -= 1;
         if (items.length > 16 && size * 4 < items.length) {
             resize(size);
         }
+        return itemToReturn;
     }
 
-    public void removeLast() {
+    public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         end = (end - 1 + items.length) % items.length;
+        T itemToReturn = items[end];
         items[end] = null;
         size -= 1;
         if (items.length > 16 && size * 4 < items.length) {
             resize(size);
         }
+        return itemToReturn;
 
     }
 
