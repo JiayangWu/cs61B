@@ -81,7 +81,7 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 	}
 
-	public static void myTest(){
+	public static void myTest() {
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		lld1.addFirst(1);
 		lld1.addFirst(2);
