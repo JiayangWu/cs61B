@@ -17,6 +17,13 @@ public class LinkedListDequeTest {
 		return true;
 	}
 
+	public static boolean checkGet(int expected, int actual) {
+		if (expected != actual) {
+			System.out.println("get() returned " + actual + ", but expected: " + expected);
+			return false;
+		}
+		return true;
+	}
 	/* Prints a nice message based on whether a test passed. 
 	 * The \n means newline. */
 	public static void printTestStatus(boolean passed) {
@@ -79,11 +86,21 @@ public class LinkedListDequeTest {
 		lld1.addFirst(1);
 		lld1.addFirst(2);
 		lld1.addFirst(3);
+
 		boolean passed = checkEmpty(false, lld1.isEmpty());
+
 		passed = checkSize(3, lld1.size()) && passed;
 		lld1.removeLast();
 		lld1.addLast(4);
+
 		passed = checkSize(3, lld1.size()) && passed;
+		lld1.printDeque();
+
+		passed = checkGet(3, lld1.get(0)) && passed;
+		lld1.removeLast();
+		lld1.addFirst(6);
+		lld1.addFirst(9);
+		passed = checkGet(2, lld1.getRecursive(3)) && passed;
 		lld1.printDeque();
 		printTestStatus(passed);
 	}
