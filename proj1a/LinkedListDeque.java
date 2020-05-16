@@ -1,6 +1,5 @@
 public class LinkedListDeque<T> {
-    private Node first;
-    private Node last; // sentinel.next should be the first, sentinel.next.pre should be the last
+    // sentinel.next should be the first, sentinel.next.pre should be the last
 
     private Node sentinel;
     private int size;
@@ -10,35 +9,31 @@ public class LinkedListDeque<T> {
         private T item;
         private Node next;
 
-        public Node(T n) {
-            item = n;
+        public Node(Node p, T i, Node n) {
+            prev = p;
+            item = i;
+            next = n;
         }
     }
 
     public LinkedListDeque() {
         size = 0;
-        sentinel = new Node(null);
-        sentinel.next = sentinel;
+        sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
+        sentinel.next = sentinel;
     }
 
     public void addFirst(T item) {
-        sentinel.next = new Node(item);
-        first = sentinel.next;
-        first.prev = first;
-        size = 1;
+        Node newNode = new Node(sentinel, item, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
+        size += 1;
     }
 
     public void addLast(T item) {
-        first = sentinel.next;
-        Node prevLast = first.prev;
-        Node newLast = new Node(item);
-
-        prevLast.next = newLast;
-        newLast.prev = prevLast;
-        newLast.next = first;
-        first.prev = newLast;
-        last = newLast;
+        Node newNode = new Node(sentinel.prev, item, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
         size += 1;
     }
 
@@ -52,47 +47,33 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         Node p = sentinel.next;
-        while (p.next != null && p.next != first) {
-            p = p.next;
+        while (p.next != null && p != sentinel) {
             System.out.print(p.item + " ");
+            p = p.next;
         }
+        System.out.println("");
     }
 
     public T removeFirst() {
-        if (first == null) {
+        if (size == 0){
             return null;
         }
-        if (size == 1) {
-            sentinel.next = null;
-        } else {
-            Node second = first.next;
-            sentinel.next = second;
-            second.prev = first.prev;
-        }
+        Node prevFirst = sentinel.next;
+        sentinel.next = prevFirst.next;
+        sentinel.next.prev = sentinel;
         size -= 1;
-        first.next = null;
-        first.prev = null;
-        return first.item;
+        return prevFirst.item;
     }
 
     public T removeLast() {
-        first = sentinel.next;
-        if (first == null) {
+        if (size == 0){
             return null;
         }
-
-        if (size == 1) {
-            sentinel.next = null;
-        } else {
-            last = first.prev;
-            Node newLast = last.prev;
-            newLast.next = first;
-            first.prev = newLast;
-        }
+        Node prevLast = sentinel.prev;
+        sentinel.prev = prevLast.prev;
+        sentinel.prev.next = sentinel;
         size -= 1;
-        last.next = null;
-        last.prev = null;
-        return last.item;
+        return prevLast.item;
     }
 
     public T get(int index) {
