@@ -2,10 +2,10 @@ public class ArrayDeque<T> {
     /* Invariants: start is always the next free front position,
                    end is always the next free back position.
      */
-    T[] items;
-    int size;
-    int start;
-    int end;
+    private T[] items;
+    private int size;
+    private int start;
+    private int end;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -79,10 +79,10 @@ public class ArrayDeque<T> {
         return items[(start + index + 1) % items.length];
     }
 
-    public void resize(int newSize) {
+    private void resize(int newSize) {
         T[] tempArray = (T[]) new Object[newSize];
         int j = 0;
-        for (int i = (start + 1) % size; j != size; i = (i + 1) % items.length) {
+        for (int i = (start + 1) % items.length; j != size; i = (i + 1) % items.length) {
             tempArray[j] = items[i];
             j += 1;
         }
@@ -91,13 +91,13 @@ public class ArrayDeque<T> {
         end = size;
     }
 
-    public ArrayDeque(ArrayDeque other) {
-        items = (T[]) new Object[other.size];
-        size = 0;
-        start = 0;
-        end = 1;
-        for (int i = 0; i < other.size; i++) {
-            addLast((T) other.get(i));
-        }
-    }
+    // public ArrayDeque(ArrayDeque other) {
+    //     items = (T[]) new Object[other.size];
+    //     size = 0;
+    //     start = 0;
+    //     end = 1;
+    //     for (int i = 0; i < other.size; i++) {
+    //         addLast((T) other.get(i));
+    //     }
+    // }
 }
