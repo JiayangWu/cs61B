@@ -1,4 +1,4 @@
-public class LinkedListDeque<T> implements Deque <T> {
+public class LinkedListDeque<T> implements Deque<T> {
     // sentinel.next should be the first, sentinel.next.pre should be the last
 
     private Node sentinel;
